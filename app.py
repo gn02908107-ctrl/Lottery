@@ -8,6 +8,9 @@ from datetime import datetime
 
 st.set_page_config(page_title="樂透資料查詢分析系統", layout="wide")
 
+# 資料庫連線
+DB_NAME = Path(__file__).parent / "data" / "今彩539.db"
+
 st.title("🏆 樂透資料查詢分析系統")
 
 if DB_NAME.exists():
@@ -19,8 +22,6 @@ else:
 # --- 側邊欄：玩法切換 ---
 game_mode = st.sidebar.selectbox("請選擇玩法", ["今彩539", "未來擴充玩法..."])
 
-# 資料庫連線
-DB_NAME = Path(__file__).parent / "data" / "今彩539.db"
 
 @st.cache_data(ttl=3600)
 def load_data(table_name):
