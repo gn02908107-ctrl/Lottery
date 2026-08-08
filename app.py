@@ -3,10 +3,18 @@ import sqlite3
 import pandas as pd
 import altair as alt
 from pathlib import Path
+import os
+from datetime import datetime
 
 st.set_page_config(page_title="樂透資料查詢分析系統", layout="wide")
 
 st.title("🏆 樂透資料查詢分析系統")
+
+if DB_NAME.exists():
+    last_modified = datetime.fromtimestamp(os.path.getmtime(DB_NAME))
+    st.caption(f"資料每日台灣時間 20:30 自動更新　｜　資料庫最後更新時間:{last_modified.strftime('%Y-%m-%d %H:%M')}")
+else:
+    st.caption("資料每日台灣時間 20:30 自動更新")
 
 # --- 側邊欄：玩法切換 ---
 game_mode = st.sidebar.selectbox("請選擇玩法", ["今彩539", "未來擴充玩法..."])
