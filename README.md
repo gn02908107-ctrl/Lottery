@@ -1,3 +1,5 @@
+[![Update Lottery Data](https://github.com/gn02908107-ctrl/Lottery/actions/workflows/update.yml/badge.svg)](https://github.com/gn02908107-ctrl/Lottery/actions/workflows/update.yml)
+
 # 🏆 今彩539 歷史資料查詢與自動化分析系統
 
 自動化抓取台灣彩券今彩539開獎資料，並提供歷史數據查詢與統計分析的 Streamlit 互動式網頁應用。
