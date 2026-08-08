@@ -3,7 +3,7 @@ import sqlite3
 import pandas as pd
 import altair as alt
 from pathlib import Path
-import os
+import os,random
 from datetime import datetime
 
 st.set_page_config(page_title="樂透資料查詢分析系統", layout="wide")
@@ -144,4 +144,26 @@ if game_mode == "今彩539":
         
         # 下載按鈕
         csv = filtered_df.to_csv(index=False).encode('utf-8-sig')
-        st.download_button("下載篩選後的歷史資料 (CSV)", csv, "539_filtered_history.csv", "text/csv") #[cite: 3]
+        st.download_button("下載篩選後的歷史資料 (CSV)", csv, "539_filtered_history.csv", "text/csv")
+
+    # ------區塊 3：幸運號碼小遊戲------
+        st.divider()
+        st.subheader("🎲 幸運號碼小遊戲")
+        st.caption("僅供娛樂，號碼由亂數隨機產生，不代表任何統計預測或中獎保證")
+
+        col_a, col_b = st.columns(2)
+
+        with col_a:
+            if st.button("🎰 純隨機抽號（僅供娛樂參考）"):
+                lucky_numbers = sorted(random.sample(range(1, 40), 5))
+                lucky_str = "、".join([f"{n:02d}" for n in lucky_numbers])
+                st.success(f"🍀 你的幸運號碼：{lucky_str}")
+
+        with col_b:
+            if st.button("🎰 熱門加權抽號（僅供娛樂參考）"):
+                weights = freq_df.set_index('號碼')['出現次數'] + 1
+                lucky_numbers = sorted(
+                    pd.Series(weights.index).sample(n=5, weights=weights, replace=False)
+                )
+                lucky_str = "、".join([f"{n:02d}" for n in lucky_numbers])
+                st.info(f"🎯 根據歷史熱門度抽出：{lucky_str}")
