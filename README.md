@@ -27,11 +27,13 @@ DEMO連結：https://lottery-4knzpxaripgubiqm5fxfzz.streamlit.app/
 
 ## 功能特性
 
-- **自動更新**：GitHub Actions 每日 UTC 16:00（台灣時間 00:00）自動執行爬蟲，補登最新開獎資料。
+- **自動更新**：GitHub Actions 每日台灣時間 20:30（UTC 12:30）自動執行爬蟲，補登最新開獎資料。
 - **重複資料防呆**：以「期別」作為唯一鍵，避免同一期資料被重複寫入。
 - **資料整合**：統一日期格式，並自動將開獎號碼由小到大排序。
 - **日期區間篩選**：可自訂日期範圍查詢歷史開獎資料。
 - **號碼統計分析**：號碼出現頻率長條圖、熱門／冷門號碼、近期未開出號碼。
+- **資料更新狀態顯示**：網頁上即時顯示資料庫最後更新時間，方便確認排程是否正常運作。
+- **幸運號碼小遊戲**：提供純隨機與熱門加權兩種抽號按鈕，僅供娛樂，明確標註不具統計預測意義。
 - **網頁查詢介面**：透過 Streamlit 瀏覽篩選後的歷史開獎資料，並可下載 CSV。
 - **多玩法擴充**：架構預留，未來可擴充大樂透、威力彩等玩法。
 
@@ -57,12 +59,17 @@ DEMO連結：https://lottery-4knzpxaripgubiqm5fxfzz.streamlit.app/
 ## 自動化說明
 
 - Workflow 檔案：`.github/workflows/update.yml`
-- 每日透過 GitHub Actions 執行 `Lottery_fetch.py`，抓取最新開獎號碼並寫入資料庫。
+- 每日台灣時間 20:30（UTC 12:30）透過 GitHub Actions 執行 `Lottery_fetch.py`，抓取最新開獎號碼並寫入資料庫。
 - 資料更新後由 Actions 自動 commit 並推送回本 Repository。
 - 亦可透過 `workflow_dispatch` 手動觸發執行。
+
+## 部署備註
+
+- Streamlit Community Cloud 部署時，Python 版本需在「Advanced settings」手動指定為 **3.12**（避免使用平台預設的最新版本）。這是因為 `altair` 套件目前對極新版 Python（3.13/3.14）的 `TypedDict(closed=True)` 語法相容性尚不穩定，會導致 `import altair` 直接報錯。
 
 ## 已知限制 / TODO
 
 - 目前僅支援今彩539，其餘玩法（大樂透、威力彩）待擴充。
 - `Lottery_Database.py` 為一次性歷史資料建置工具，未涵蓋在自動化流程與重複執行的防呆設計內。
 - 台彩 API 目前以 `verify=False` 關閉 SSL 憑證驗證，待日後改善為憑證釘選或其他更安全的作法。
+- 幸運號碼小遊戲純粹是娛樂功能，不具備任何統計預測力（彩券開獎為獨立事件，過去資料不影響未來結果）。
