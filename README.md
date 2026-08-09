@@ -27,7 +27,7 @@ DEMO連結：https://lottery-4knzpxaripgubiqm5fxfzz.streamlit.app/
 
 ## 功能特性
 
-- **自動更新**：GitHub Actions 每日台灣時間 20:30（UTC 12:30）自動執行爬蟲，補登最新開獎資料。
+- **自動更新**：GitHub Actions 每日台灣時間 21:00（UTC 13:00）自動執行爬蟲，補登最新開獎資料。
 - **重複資料防呆**：以「期別」作為唯一鍵，避免同一期資料被重複寫入。
 - **資料整合**：統一日期格式，並自動將開獎號碼由小到大排序。
 - **日期區間篩選**：可自訂日期範圍查詢歷史開獎資料。
@@ -59,7 +59,7 @@ DEMO連結：https://lottery-4knzpxaripgubiqm5fxfzz.streamlit.app/
 ## 自動化說明
 
 - Workflow 檔案：`.github/workflows/update.yml`
-- 每日台灣時間 20:30（UTC 12:30）透過 GitHub Actions 執行 `Lottery_fetch.py`，抓取最新開獎號碼並寫入資料庫。
+- 每日台灣時間 21:00（UTC 13:00）透過 GitHub Actions 執行 `Lottery_fetch.py`，抓取最新開獎號碼並寫入資料庫。
 - 資料更新後由 Actions 自動 commit 並推送回本 Repository。
 - 亦可透過 `workflow_dispatch` 手動觸發執行。
 
