@@ -4,7 +4,7 @@
 
 自動化抓取台灣彩券今彩539開獎資料，並提供歷史數據查詢與統計分析的 Streamlit 互動式網頁應用。
 
-DEMO連結：https://lottery-4knzpxaripgubiqm5fxfzz.streamlit.app/
+**🔗 [線上 Demo]([https://tpekhhairline-jjhcwfvjjkqkrq3pwwkpfu.streamlit.app/](https://lottery-4knzpxaripgubiqm5fxfzz.streamlit.app/))**
 
 ## 專案架構
 
