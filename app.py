@@ -5,7 +5,7 @@ import altair as alt
 from pathlib import Path
 import os,random
 from datetime import datetime,timezone
-from zoneinfo import Zoneinfo
+from zoneinfo import ZoneInfo
 import os
 
 st.set_page_config(page_title="樂透資料查詢分析系統", layout="wide")
