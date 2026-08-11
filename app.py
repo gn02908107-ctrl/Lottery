@@ -52,6 +52,7 @@ if game_mode == "今彩539":
     if not df.empty:
         
         #------最新一期開獎結果------
+        st.divider()
         latest = df.sort_values('開獎日期',ascending=False).iloc[0]
         latest_date = latest['開獎日期'].strftime('%Y-%m-%d')
         latest_numbers = '、'.join([f'{int(latest[c]):02d}' for c in cols_numbers])
@@ -101,8 +102,6 @@ if game_mode == "今彩539":
         freq_series = freq_series.reindex(range(1, 40), fill_value=0)
         freq_df = freq_series.sort_index().reset_index()
         freq_df.columns = ['號碼', '出現次數']
-        
-        st.divider()
         
     #------冷熱號分析------
         col1, col2, col3 = st.columns(3)
