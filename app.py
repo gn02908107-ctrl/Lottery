@@ -88,7 +88,6 @@ if game_mode == "今彩539":
             filtered_df = df.copy()
 
     # ------區塊 1：號碼出現次數統計與圖表------
-        st.divider()
         st.subheader('📊 號碼出現頻率統計')
         cols_numbers = ["獎號1", "獎號2", "獎號3", "獎號4", "獎號5"]   # 統計的欄位
         
@@ -102,6 +101,8 @@ if game_mode == "今彩539":
         freq_series = freq_series.reindex(range(1, 40), fill_value=0)
         freq_df = freq_series.sort_index().reset_index()
         freq_df.columns = ['號碼', '出現次數']
+        
+        st.divider()
         
     #------冷熱號分析------
         col1, col2, col3 = st.columns(3)
