@@ -46,9 +46,26 @@ def load_data(table_name):
 if game_mode == "今彩539":
     st.subheader("今彩539 歷史開獎資料")
     df = load_data("lotto_539")
+    cols_numbers = ["獎號1", "獎號2", "獎號3", "獎號4", "獎號5"]
     
     # 增加防呆：確保有讀取到資料才繼續執行
     if not df.empty:
+        
+        #------最新一期開獎結果------
+        latest = df.sort_values('開獎日期',ascending=False).iloc[0]
+        latest_date = latest['開獎日期'].strftime('%Y-%m-%d')
+        latest_numbers = '、'.join([f'{int(latest[c]):02d}' for c in cols_numbers])
+        
+        st.subheader('最新一期開獎結果')
+        col1,col2,col3 = st.columns([1,1,2])
+        with col1:
+            st.metric('開獎日期',latest_date)
+        with col2:
+            st.metric('期別',latest['期別'])
+        with col3:
+            st.metric('開獎獎號',latest_numbers)
+            
+        st.divider()
         
         # --- 側邊欄：日期篩選 ---
         st.sidebar.header("篩選條件")
