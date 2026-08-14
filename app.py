@@ -4,7 +4,7 @@ import pandas as pd
 import altair as alt
 from pathlib import Path
 import os,random
-from datetime import datetime,timezone
+from datetime import datetime,timezone,date
 from zoneinfo import ZoneInfo
 import os
 
@@ -73,9 +73,15 @@ if game_mode == "今彩539":
         min_date = df['開獎日期'].min().date()
         max_date = df['開獎日期'].max().date()
         
+        today_tw = datetime.now(ZoneInfo("Asia/Taipei")).date()
+                
+        # --- 預設顯示為當月資料 ---
+        default_start = max(today_tw.replace(day=1), min_date)  # 當月1號，若比資料庫最早日期還早則取min_date
+        default_end = min(today_tw, max_date)  # 今天，若比資料庫最新日期還晚則取max_date
+        
         date_range = st.sidebar.date_input(
             "選擇日期範圍",
-            value=(min_date, max_date),
+            value=(default_start, default_end),
             min_value=min_date,
             max_value=max_date
         )
@@ -181,9 +187,12 @@ if game_mode == "今彩539":
 
         with col_b:
             if st.button("🎰 熱門加權抽號（僅供娛樂參考）"):
-                weights = freq_df.set_index('號碼')['出現次數'] + 1
-                lucky_numbers = sorted(
-                    pd.Series(weights.index).sample(n=5, weights=weights, replace=False)
+                if filtered_df.empty:
+                    st.warning("目前篩選區間沒有資料，無法加權抽號")
+                else:
+                    weights = freq_df.set_index('號碼')['出現次數'] + 1
+                    lucky_numbers = sorted(
+                        pd.Series(weights.index).sample(n=5, weights=weights, replace=False)
                 )
                 lucky_str = "、".join([f"{n:02d}" for n in lucky_numbers])
-                st.info(f"🎯 根據歷史熱門度抽出：{lucky_str}")
+                st.info(f"🎯 根據「{default_start} ~ {default_end}」篩選區間的熱門度抽出：{lucky_str}")
