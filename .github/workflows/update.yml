@@ -2,17 +2,20 @@ name: Update Lottery Data
 on:
   schedule:
     - cron: '0 13 * * *' # 每天 UTC 13:00 (台灣時間 21:00) 執行
-  workflow_dispatch:      
+  workflow_dispatch:
+
+permissions:
+  contents: write # 允許 workflow 把更新後的資料庫 push 回 repo
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.12'
       - name: Install dependencies
         run: pip install pandas requests urllib3
       - name: Run fetch script
@@ -21,6 +24,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/今彩539.db  # 對應Database路徑
+          git add data/今彩539.db  # 這裡要對應你的路徑
           git commit -m "Update database automatically" || echo "No changes to commit"
           git push
